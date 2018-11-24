@@ -4,3 +4,8 @@ venv
 # IDE
 .idea
 
+# Jupyter notebooks
+.ipynb_checkpoints
+
+# stored date
+*.pickle
