@@ -22,7 +22,7 @@ def search():
         gs, paths = get_isochrone(petit['lat'], petit['lon'], petit['duration'])
         isochrone = gs if isochrone is None else isochrone.union(gs)
         all_paths.append(paths)
-    r = requests.get('localhost:3000', params={
+    r = requests.get('localhost:3000/annonces', params={
         'isochrone': isochrone.__geo_interface__,
         'max_price': max_price,
     })
