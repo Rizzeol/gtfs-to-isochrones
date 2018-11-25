@@ -29,6 +29,7 @@ def search():
     matching_properties = r.json()
     matching_properties['paths'] = all_paths
     matching_properties['stops'] = get_stop_locations_from_paths(all_paths)
+    matching_properties['geoJSON'] = isochrone.__geo_interface__
     return jsonify(matching_properties)
 
 
