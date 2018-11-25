@@ -41,3 +41,7 @@ def get_stop_locations_from_paths(paths):
                     point = stops.get(stop)
                     locations[stop] = (point.y, point.x)
     return locations
+
+
+if __name__ == '__main__':
+    app.run()
