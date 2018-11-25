@@ -1,17 +1,15 @@
 
+import os
+
 import requests
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response, send_from_directory
 from gtfs_graph.geo import get_isochrone, stops
 from flask_cors import CORS
 import json
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/whatever')
 CORS(app)
-
-@app.route('/')
-def index():
-    return 'Hello, world!'
 
 
 @app.route('/search', methods=['POST'])
@@ -34,6 +32,20 @@ def search():
     return jsonify(matching_properties)
 
 
+def root_dir():  # pragma: no cover
+    return '/Users/ire/dev/lauzhack-front/build'
+
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def get_resource(path):  # pragma: no cover
+    path = 'index.html' if path == '' else path
+    return send_from_directory(
+        root_dir(),
+        path
+    )
+
+
 def get_stop_locations_from_paths(paths):
     locations = dict()
     for path in paths:
@@ -46,4 +58,4 @@ def get_stop_locations_from_paths(paths):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=80)
