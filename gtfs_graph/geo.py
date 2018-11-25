@@ -76,17 +76,18 @@ def get_isochrone(source_lat, source_lon, remaining_time, walking_speed=50):
     radius = remaining_time * walking_speed
     source_buffer = buffer_from_coordinates(source_lat, source_lon, radius)
     available_stops = get_contained_stops(source_buffer)
-    all_buffers = [(source_buffer, list())]
+    all_buffers = [source_buffer]
+    all_paths = list()
     for stop, point in available_stops.items():
         distance = get_distance_in_meters(source, point)
         spent_time = distance / walking_speed
         targets, paths = get_reachable_stops(stop, remaining_time - spent_time)
         for final_stop, used_time in targets.items():
-            all_buffers.append((
+            all_buffers.append(
                 buffer_from_point(
                     stops.get(final_stop),
                     (remaining_time - spent_time - used_time) * walking_speed
-                ),
-                paths.get(final_stop),
-            ))
-    return all_buffers
+                )
+            )
+            all_paths.append(paths.get(final_stop))
+    return GeoSeries(unary_union(all_buffers)), all_paths

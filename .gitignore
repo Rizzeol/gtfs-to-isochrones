@@ -9,3 +9,5 @@ venv
 
 # stored date
 *.pickle
+
+__pycache__
