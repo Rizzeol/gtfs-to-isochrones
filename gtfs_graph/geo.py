@@ -89,5 +89,5 @@ def get_isochrone(source_lat, source_lon, remaining_time, walking_speed=50):
                     (remaining_time - spent_time - used_time) * walking_speed
                 )
             )
-            all_paths.append(paths.get(final_stop))
+        all_paths.append(paths)
     return GeoSeries(unary_union(all_buffers)), all_paths
