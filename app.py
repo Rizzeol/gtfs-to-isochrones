@@ -20,7 +20,7 @@ def search():
     all_paths = list()
     for petit in pois:
         gs, paths = get_isochrone(petit['lat'], petit['lon'], petit['duration'])
-        isochrone = gs if isochrone is None else isochrone.union(gs)
+        isochrone = gs if isochrone is None else isochrone.intersection(gs)
         all_paths = all_paths + paths
     r = requests.post('http://localhost:3000/annonces', headers={'Content-Type': 'application/json'}, data=json.dumps({
         'isochrone': isochrone.__geo_interface__,
